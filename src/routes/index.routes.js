@@ -17,7 +17,11 @@ router.get('/',(req, res)=> {
 const upload = multer({
     storage,
     dest:path.join(__dirname,'public/images'),
-    limits: {fieldSize:1000000}
+    //limits: {fieldSize:1000000}
+    fileFilter: (req, file, cb)=> {
+        const filetypes = /jpeg|jpg|png|gif/;
+        const extname = filetypes.test(file.mimetype);
+    }
 }).single('image')
 
 router.post('/upload',upload ,(req,res) =>{
